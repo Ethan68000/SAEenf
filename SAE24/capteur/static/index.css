@@ -1,0 +1,37 @@
+h1 {
+    font-family: 'Goudy Old Style', cursive;
+    text-align: center;
+    color: rgb(193, 221, 32);
+    font-size: 4em;
+    margin-top: 120px;
+    text-shadow: 1px 3px 2px black;
+}
+
+html, body {
+    background-image: url(/static/img/fondbclaire.webp.png);
+}
+
+#nav {
+    float: center;
+    background-color: #f5f2e6;
+    opacity: 0.9;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+#nav a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 30px 30px;
+    text-decoration: none;
+    font-family: 'Papyrus', cursive;
+}
+
+
+#nav a:hover {
+    background-color: blue;
+}
+
+

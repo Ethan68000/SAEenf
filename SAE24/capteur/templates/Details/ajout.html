@@ -1,0 +1,26 @@
+{% block subtitle %}
+<h2> Ajouter un nouveau Donnees </h2>
+{% endblock %}
+
+{% block form %}
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="date">Date de Sortie:</label>
+        <input type="date" name="date" id="date" required>
+    </div>
+    <div class="form-group">
+        <label for="heure">Heure:</label>
+        {{ form.time }}
+    </div>
+    <div class="form-group">
+        <label for="temperature">Température :</label>
+        {{ form.temperature }}
+    </div>
+    <div class="form-group">
+        <label for="capteur">ID du Capteur:</label>
+        {{ form.id_capteur }}
+        </div>
+    <input type="submit" value="envoyer les données"\>
+<br>
+<a href="/capteur/indexdon/"> retournez à la page d'accueil</a>
+{% endblock %}

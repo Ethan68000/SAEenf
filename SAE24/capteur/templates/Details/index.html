@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link href="{%static 'index.css' %}" rel="stylesheet" type="text/css">
+    <title>{% block title %}
+        mon titre
+        {% endblock %}
+     </title>
+<style>
+    "background-image: url('/static/img/fondclaire.webp.png')"
+</style>
+
+</head>
+<div id="fond">
+<ul>
+    <li id="nav"><a href="/capteur/bienvenue">Accueil</a></li>
+    <li id="nav"><a href="/capteur/ajout">ajout capteur</a></li>
+    <li id="nav"><a href="/capteur/index/">capteur</a></li>
+    <li id="nav"><a href="/capteur/ajoutdon/">ajout donnée</a></li>
+    <li id="nav"><a href="/capteur/indexdon/">donnée</a></li>
+</ul>
+</div>
+<body>
+<h1> La liste des donnees </h1>
+<br>
+<ul>
+{% for l in liste %}
+<li> Donnees {{l}}
+    <a href ="/capteur/affiche/{{l.id_capteur}}/"> Afficher la description du capteur</a>
+    <a href ="/capteur/delete/{{l.id_capteur}}/"> Supprimer</a>
+    <a href ="/capteur/update/{{l.id_capteur}}/">mettre a jour</a>
+</li>
+    {% endfor %}
+</ul>
+<script>
+setTimeout(function() {
+    location.reload();
+}, 3000); // Rafraîchit la page après 5 secondes (5000 millisecondes)
+</script>
+</body>
+</html>
