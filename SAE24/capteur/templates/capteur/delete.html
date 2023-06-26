@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% block content %}
+    <div class="container">
+        <h2>Supprimer le Capteur</h2>
+        <p>Voulez-vous vraiment supprimer le Capteur "{{ capteurs.di }}" ?</p>
+        <form>
+            <div class="confirmation-buttons">
+                <a href="/Capteur/supprimer_confirm_capteur/{{capteurs.id_capteur}}/" class="btn-supprimer">Confirmer la suppression</a>
+                <a href="/Collecteapp/Capteur/liste_capteur/" class="btn-annuler">Annuler</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

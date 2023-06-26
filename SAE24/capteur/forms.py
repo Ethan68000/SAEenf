@@ -12,3 +12,8 @@ class DetailsForm(ModelForm):
     class Meta:
         model = models.Details
         fields = "__all__"
+
+class CapteurFormupdate(ModelForm):
+    class Meta:
+        model = models.Capteur
+        fields = "__all__"

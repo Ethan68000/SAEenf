@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>update</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'capteur/main.css' %}">
+    <title>Mise à jour du capteur</title>
 </head>
 <body>
-<form method="post" action="/capteur/update/{{capteur.id}}/">
+<form class="formulaire" method="post" action="/capteur/updatetraitement/{{id}}/">
 {% csrf_token %}
-{{ form.as_ul }}
-<input type="submit" value="envoyer les données">
+  <div class="field-container">
+    {{ form.id_capteur.label_tag }}
+    {{ form.id_capteur }}
+  </div>
+    <div class="field-container">
+    {{ form.piece.label_tag }}
+    {{ form.piece }}
+  </div>
+<input type="submit" value="envoyer les données"/>
+<a href="/capteur/index/"> retournez à la page d'accueil</a>
 </form>
-<a href="/capteur/index/">Retourner à la page d'accueil</a>
 </body>
 </html>

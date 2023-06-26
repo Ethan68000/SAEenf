@@ -1,11 +1,12 @@
-h1 {
-    font-family: 'Goudy Old Style', cursive;
+h2 {
+    font-family: 'Papyrus', cursive;
     text-align: center;
-    color: rgb(193, 221, 32);
-    font-size: 4em;
+    color: rgb(223, 109, 20);
+    font-size: 3em;
     margin-top: 120px;
     text-shadow: 1px 3px 2px black;
 }
+
 
 html, body {
     background-image: url(/static/img/fondbclaire.webp.png);

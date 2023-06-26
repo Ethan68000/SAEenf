@@ -18,16 +18,16 @@
     <li id="nav"><a href="/capteur/bienvenue">Accueil</a></li>
     <li id="nav"><a href="/capteur/ajout">ajout capteur</a></li>
     <li id="nav"><a href="/capteur/index/">capteur</a></li>
-    <li id="nav"><a href="/capteur/ajoutdon/">ajout donnée</a></li>
-    <li id="nav"><a href="/capteur/indexdon/">donnée</a></li>
+    <li id="nav"><a href="/capteur/ajoutdet/">ajout donnée</a></li>
+    <li id="nav"><a href="/capteur/indexdet/">donnée</a></li>
 </ul>
 </div>
 <body>
-<h1> La liste des capteurs </h1>
+<h2> La liste des capteurs </h2>
 <br>
 <ul>
 {% for l in liste %}
-<li> capteur {{l.id_capteur}}
+<li> capteur {{l}}
     <a href ="/capteur/affiche/{{l.id_capteur}}/"> Afficher la description du capteur</a>
     <a href ="/capteur/delete/{{l.id_capteur}}/"> Supprimer</a>
     <a href ="/capteur/update/{{l.id_capteur}}/">mettre a jour</a>

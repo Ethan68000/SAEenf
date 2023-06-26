@@ -85,6 +85,12 @@ class Capteur(models.Model):
         managed = False
         db_table = 'capteur'
 
+    def __str__(self):
+        return f"Capteur {self.id_capteur} {self.piece}."
+
+    def dic(self):
+        return {"id_capteur": self.id_capteur, "piece": self.piece, }
+
 
 class CapteurCapteur(models.Model):
     id_capteur = models.CharField(primary_key=True, max_length=40)
@@ -106,6 +112,10 @@ class Details(models.Model):
     class Meta:
         managed = False
         db_table = 'details'
+
+    def __str__(self):
+        chaine = f"{self.id_capteur} {self.piece} {self.date} {self.time} {self.temp}"
+        return chaine
 
 
 class DjangoAdminLog(models.Model):

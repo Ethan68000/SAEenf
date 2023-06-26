@@ -1,8 +1,8 @@
-from .forms import CapteurForm
+from .forms import CapteurForm, CapteurFormupdate
 from django.shortcuts import render
 from . import models
 from django.http import HttpResponseRedirect
-import paho.mqtt.client as mqtt
+
 
 def indexmqtt(request):
     liste = models.Capteur.objects.all()
@@ -47,17 +47,20 @@ def delete(request, id):
 
 def update(request, id):
     Capteur = models.Capteur.objects.get(pk=id)
-    aform = CapteurForm(Capteur.dic())
-    return render(request, "capteur/ajoutupdate.html/", {"form":aform, "id":id})
-
+    form = CapteurFormupdate(Capteur.dic())
+    temp = models.Capteur.objects.get(pk=id)
+    temp.save()
+    return render(request, "capteur/update.html", {"form":form, "id":id})
 
 def updatetraitement(request, id):
-    aform = CapteurForm(request.POST)
+    form = CapteurFormupdate(request.POST)
     saveid = id
-    if aform.is_valid():
-        Capteur = aform.save(commit = False)
+    piece = models.Capteur.objects.get(pk=id).piece
+    if form.is_valid():
+        Capteur = form.save(commit = False)
         Capteur.id = saveid
+        Capteur.piece = piece
         Capteur.save()
-        return HttpResponseRedirect("/capteur/index/")
+        return HttpResponseRedirect("/capteur/index")
     else:
-        return render(request, "capteur/ajoutupdate.html", {"form": aform})
+        return HttpResponseRedirect(f"/capteur/update/{saveid}/")
