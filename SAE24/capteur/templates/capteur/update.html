@@ -1,24 +1,15 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{% static 'capteur/main.css' %}">
-    <title>Mise à jour du capteur</title>
-</head>
-<body>
-<form class="formulaire" method="post" action="/capteur/updatetraitement/{{id}}/">
-{% csrf_token %}
-  <div class="field-container">
-    {{ form.id_capteur.label_tag }}
-    {{ form.id_capteur }}
-  </div>
-    <div class="field-container">
-    {{ form.piece.label_tag }}
-    {{ form.piece }}
-  </div>
-<input type="submit" value="envoyer les données"/>
-<a href="/capteur/index/"> retournez à la page d'accueil</a>
-</form>
-</body>
-</html>
+
+{% block content %}
+    <form id="msform" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset>
+          <h2 class="fs-title">Modifier le Informations du Capteur"{{id_capteur }}"</h2>
+          {{ form.piece.label_tag }}
+          {{ form.piece }}
+        <br><br>
+        <button type="submit" class="btn-i">Modifier</button>
+        <a href="capteur/affiche/" class="btn-ii">
+            <button ="submit" class="btn-ii">Annuler</button></a>
+    </fieldset>
+      </form>
+{% endblock %}

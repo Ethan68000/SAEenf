@@ -38,29 +38,54 @@ def index(request):
     return render(request, 'capteur/index.html', {"liste": liste})
 
 
-def delete(request, id):
-    suppr = models.Capteur.objects.get(pk=id)
-    suppr.delete()
-    return HttpResponseRedirect("/capteur/index",)
+def delete(request, id_capteur):
+    Capteur = models.Capteur.objects.get(pk=id_capteur)
+    return render(request, "capteur/delete.html", {"Capteur": Capteur})
 
 
 
 def update(request, id):
     Capteur = models.Capteur.objects.get(pk=id)
-    form = CapteurFormupdate(Capteur.dic())
-    temp = models.Capteur.objects.get(pk=id)
-    temp.save()
-    return render(request, "capteur/update.html", {"form":form, "id":id})
+    aform = CapteurForm(Capteur.dic())
+    return render(request, "capteur/ajoutupdate.html/", {"form":aform, "id":id})
 
+def filtre(request):
+    capteurs = models.Capteur.objects.all()
+
+    if request.method == 'POST':
+        id_capteur = request.POST.get('id_capteur')
+
+        if not id_capteur:
+            return render(request, 'capteur/filtre.html', {'erreur'})
+
+        try:
+            capteur = models.Capteur.objects.get(id_capteur=id_capteur)
+        except models.Capteur.DoesNotExist:
+            return render(request, 'capteur/filtre.html', {'erreur': 'Le capteur spécifié n\'existe pas.'})
+
+        donnees = models.Details.objects.filter(id_capteur=capteur)
+
+        context = {
+            'donnees': donnees,
+            'capteur': capteur,
+            'capteurs': capteurs
+        }
+
+        return render(request, 'capteur/filtre.html', context)
+
+    context = {
+        'capteurs': capteurs
+    }
+
+    return render(request, 'capteur/filtre.html', context)
 def updatetraitement(request, id):
-    form = CapteurFormupdate(request.POST)
+    aform = CapteurForm(request.POST)
     saveid = id
-    piece = models.Capteur.objects.get(pk=id).piece
-    if form.is_valid():
-        Capteur = form.save(commit = False)
+    if aform.is_valid():
+        Capteur = aform.save(commit = False)
         Capteur.id = saveid
-        Capteur.piece = piece
         Capteur.save()
-        return HttpResponseRedirect("/capteur/index")
+        return HttpResponseRedirect("/capteur/index/")
     else:
-        return HttpResponseRedirect(f"/capteur/update/{saveid}/")
+        return render(request, "capteur/ajoutupdate.html", {"form": aform})
+

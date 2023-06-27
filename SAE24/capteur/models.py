@@ -89,7 +89,7 @@ class Capteur(models.Model):
         return f"Capteur {self.id_capteur} {self.piece}."
 
     def dic(self):
-        return {"id_capteur": self.id_capteur, "piece": self.piece, }
+        return { "piece": self.piece,}
 
 
 class CapteurCapteur(models.Model):

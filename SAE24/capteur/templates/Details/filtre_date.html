@@ -1,0 +1,27 @@
+
+<form method="POST" action="/capteur/filtre_datedet/">
+    {% csrf_token %}
+    <label for="date">Date :</label>
+    <input type="date" name="date" id="date" class="form-control">
+    <button type="submit">Filtrer</button>
+</form>
+{% if donnees %}
+        <table>
+    <caption>Données pour la date : {{ date }}</caption>
+    <thead>
+        <tr>
+            <th scope="col">ID Capteur</th>
+            <th scope="col">Pièce</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for details in donnees %}
+            <tr>
+                <td>{{ details.capteur.id_capteur }}</td>
+                <td>{{ details.capteur.piece }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+        </table>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,32 @@
+
+{% block content %}
+    <h1>Liste des capteurs</h1>
+    <form method="POST" action="/capteur/filtre/">
+        {% csrf_token %}
+        <label for="id_capteur">Capteur :</label>
+        <select name="id_capteur" id="id_capteur" class="form-select">
+            {% for capteur in capteurs %}
+                <option value="{{ capteur.id_capteur }}">{{ capteur.id_capteur }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filtrer</button>
+    </form>
+
+    {% if donnees %}
+        <table>
+    <caption>Données pour le capteur : {{ capteur.id_capteur }}</caption>
+    <thead>
+        <tr>
+            <th scope="col">ID Capteur</th>
+            <th scope="col">Pièce</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ capteur.id_capteur }}</td>
+            <td>{{ capteur.piece }}</td>
+        </tr>
+    </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
