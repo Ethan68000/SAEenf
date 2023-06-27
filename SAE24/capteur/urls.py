@@ -1,7 +1,6 @@
 from . import views, detailsviews
 from django.urls import path
 
-from .detailsviews import export_to_csv
 
 urlpatterns = [
                 path('ajout/', views.ajout),
@@ -19,8 +18,7 @@ urlpatterns = [
                 path('indexdet/', detailsviews.index),
                 path('deletedet/<str:id>/',detailsviews.delete),
                 path('traitementdet/',detailsviews.traitement),
-                #path('csvdet/', detailsviews.generate_csv, name='generate_csv'),
+                path('csv/', views.generate_csv,),
                 path('filtre_datedet/', detailsviews.filtre_date),
 
-                path('export/', export_to_csv, name='export_to_csv'),
     ]

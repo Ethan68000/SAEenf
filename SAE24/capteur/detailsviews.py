@@ -41,29 +41,6 @@ def delete(request, id):
     return HttpResponseRedirect("/capteur/indexdet",)
 
 
-import csv
-from django.http import HttpResponse
-from django.template import loader
-
-def export_to_csv(request):
-    liste = ['valeur1', 'valeur2', 'valeur3']  # Exemple de liste de données
-
-    template = loader.get_template('export_template.txt')
-    context = {'liste': liste}
-    rendered_template = template.render(context)
-
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="donnees.csv"'
-
-    csv_writer = csv.writer(response)
-
-    for line in rendered_template.splitlines():
-        csv_writer.writerow([line])
-
-    return response
-
-
-
 def filtre_date(request):
     details = models.Details.objects.all()
 
@@ -89,6 +66,6 @@ def filtre_date(request):
         'donnees': details,
     }
 
-    return HttpResponseRedirect("/capteur/filtre_datedet",)
+    return render(request, "capteur/filtre_datedet.html", context)
 
 

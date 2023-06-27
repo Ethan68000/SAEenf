@@ -1,3 +1,5 @@
+import csv
+
 from .forms import CapteurForm, CapteurFormupdate
 from django.shortcuts import render
 from . import models
@@ -88,4 +90,18 @@ def updatetraitement(request, id):
         return HttpResponseRedirect("/capteur/index/")
     else:
         return render(request, "capteur/ajoutupdate.html", {"form": aform})
+
+from django.http import HttpResponse
+def generate_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="data.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Colonne1', 'Colonne2', 'Colonne3', 'Colonne4'])
+
+    data = models.Details.objects.all()
+    for item in data:
+        writer.writerow([item.id_capteur, item.date, item.time,item.temp])
+
+    return response
 
