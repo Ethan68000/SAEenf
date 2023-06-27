@@ -35,10 +35,40 @@
 </li>
     {% endfor %}
 </ul>
-<script>
-setTimeout(function() {
-    location.reload();
-}, 3000); // Rafraîchit la page après 5 secondes (5000 millisecondes)
-</script>
+</body>
+<br><br>
+<body>
+    <h3>Refresh</h3>
+    <form method="POST" action="{% url 'choisir' %}">
+        {% csrf_token %}
+        <input type="radio" name="choix" value="auto" id="auto" checked>
+        <label for="auto">Rafraîchissement automatique</label><br>
+        <input type="radio" name="choix" value="manuel" id="manuel">
+        <label for="manuel">Rafraîchissement manuel</label><br>
+        <input type="number" name="nb_secondes" id="nb_secondes" placeholder="Nombre de secondes" style="display: none;">
+        <button type="submit">Choisir</button>
+    </form>
+
+    <h5>{{ message }}</h5>
+
+    <script>
+        const choixRadio = document.querySelectorAll('input[name="choix"]');
+        const nbSecondesInput = document.getElementById('nb_secondes');
+
+        choixRadio.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value === 'manuel') {
+                    nbSecondesInput.style.display = 'inline-block';
+                } else {
+                    nbSecondesInput.style.display = 'none';
+                }
+            });
+        });
+
+        // Rafraîchissement automatique après 3 secondes
+        setTimeout(() => {
+            location.reload();
+        }, 8000);
+    </script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 import csv
 
 from .forms import CapteurForm, CapteurFormupdate
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . import models
 from django.http import HttpResponseRedirect
 
@@ -41,8 +41,15 @@ def index(request):
 
 
 def delete(request, id_capteur):
-    Capteur = models.Capteur.objects.get(pk=id_capteur)
-    return render(request, "capteur/delete.html", {"Capteur": Capteur})
+    if request.method == 'POST':
+        Capteur = models.Capteur.objects.get(pk=id_capteur)
+        # Supprimer les enregistrements liés dans la table "details"
+        Capteur.details_set.all().delete()
+        Capteur.delete()
+        return redirect('index')
+    else:
+        Capteur = models.Capteur.objects.get(pk=id_capteur)
+        return render(request, "capteur/delete.html", {"Capteur": Capteur})
 
 
 
@@ -105,3 +112,52 @@ def generate_csv(request):
 
     return response
 
+
+from django.shortcuts import render, redirect
+
+def refresh(request):
+    if request.method == 'POST':
+        choix = request.POST.get('choix')
+        if choix == 'auto':
+            message = "Rafraîchissement automatique"
+            rafraichissement = 3  # Nombre de secondes avant chaque rafraîchissement
+        elif choix == 'manuel':
+            nb_secondes = request.POST.get('nb_secondes')
+            try:
+                rafraichissement = int(nb_secondes)
+                message = "Rafraîchissement manuel"
+            except ValueError:
+                message = "Veuillez entrer un nombre entier valide."
+                rafraichissement = 0
+        else:
+            message = "Choix invalide."
+            rafraichissement = 0
+    else:
+        message = ""
+        rafraichissement = 0
+
+    context = {
+        'message': message,
+        'rafraichissement': rafraichissement
+    }
+
+    return render(request, 'capteur/index.html', context)
+
+
+def choisir(request):
+    if request.method == 'POST':
+        choix = request.POST.get('choix')
+        if choix == 'auto':
+            rafraichissement = 3  # Rafraîchissement automatique toutes les 3 secondes
+        elif choix == 'manuel':
+            nb_secondes = request.POST.get('nb_secondes')
+            try:
+                rafraichissement = int(nb_secondes)
+            except ValueError:
+                rafraichissement = 0
+        else:
+            rafraichissement = 0
+
+        return redirect('index')
+    else:
+        return redirect('index')

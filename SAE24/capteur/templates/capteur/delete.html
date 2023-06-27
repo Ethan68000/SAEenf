@@ -3,13 +3,14 @@
         <h2>Supprimer le Capteur<br><br></h2>
     </div>
     <div class="container-conf">
-        <p>Voulez-vous vraiment supprimer le Capteur "{{l.id_capteur}}" ?<br><br></p>
+        <p>Voulez-vous vraiment supprimer le Capteur "{{ Capteur.id_capteur }}" ?<br><br></p>
     </div>
-<div class="container-conf">
-    <form>
-        <div class="confirmation-buttons">
-            <a href="capteur/index/" class="btn-i">Confirmer la suppression</a>
-        </div>
-    </form>
-</div>
+    <div class="container-conf">
+        <form method="post">
+            {% csrf_token %}
+            <div class="confirmation-buttons">
+                <button type="submit" class="btn-i">Confirmer la suppression</button>
+            </div>
+        </form>
+    </div>
 {% endblock %}

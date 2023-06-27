@@ -1,6 +1,6 @@
 import csv
 from .forms import DetailsForm
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . import models
 from django.http import HttpResponseRedirect, HttpResponse
 from datetime import datetime, date
@@ -69,3 +69,49 @@ def filtre_date(request):
     return render(request, "capteur/filtre_datedet.html", context)
 
 
+def refresh(request):
+    if request.method == 'POST':
+        choix = request.POST.get('choix')
+        if choix == 'auto':
+            message = "Rafraîchissement automatique"
+            rafraichissement = 3  # Nombre de secondes avant chaque rafraîchissement
+        elif choix == 'manuel':
+            nb_secondes = request.POST.get('nb_secondes')
+            try:
+                rafraichissement = int(nb_secondes)
+                message = "Rafraîchissement manuel"
+            except ValueError:
+                message = "Veuillez entrer un nombre entier valide."
+                rafraichissement = 0
+        else:
+            message = "Choix invalide."
+            rafraichissement = 0
+    else:
+        message = ""
+        rafraichissement = 0
+
+    context = {
+        'message': message,
+        'rafraichissement': rafraichissement
+    }
+
+    return render(request, 'capteur/indexdet.html', context)
+
+
+def choisir(request):
+    if request.method == 'POST':
+        choix = request.POST.get('choix')
+        if choix == 'auto':
+            rafraichissement = 3  # Rafraîchissement automatique toutes les 3 secondes
+        elif choix == 'manuel':
+            nb_secondes = request.POST.get('nb_secondes')
+            try:
+                rafraichissement = int(nb_secondes)
+            except ValueError:
+                rafraichissement = 0
+        else:
+            rafraichissement = 0
+
+        return redirect('indexdet')
+    else:
+        return redirect('indexdet')

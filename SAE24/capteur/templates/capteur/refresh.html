@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rafraîchissement de la page</title>
+</head>
+<body>
+    <h1>Titre de la page</h1>
+    <form method="POST" action="{% url 'refresh' %}">
+        {% csrf_token %}
+        <input type="radio" name="choix" value="auto" id="auto" checked>
+        <label for="auto">Rafraîchissement automatique</label><br>
+        <input type="radio" name="choix" value="manuel" id="manuel">
+        <label for="manuel">Rafraîchissement manuel</label><br>
+        <input type="text" name="nb_secondes" id="nb_secondes" placeholder="Nombre de secondes" style="display: none;">
+        <button type="submit">Choisir</button>
+    </form>
+
+    <h2>{{ message }}</h2>
+    {% if rafraichissement > 0 %}
+        <meta http-equiv="refresh" content="{{ rafraichissement }}">
+    {% endif %}
+
+    <script>
+        const choixRadio = document.querySelectorAll('input[name="choix"]');
+        const nbSecondesInput = document.getElementById('nb_secondes');
+
+        choixRadio.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value === 'manuel') {
+                    nbSecondesInput.style.display = 'inline-block';
+                } else {
+                    nbSecondesInput.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
