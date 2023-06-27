@@ -8,19 +8,11 @@
         <label for="date">Date de Sortie:</label>
         <input type="date" name="date" id="date" required>
     </div>
-    <div class="form-group">
-        <label for="heure">Heure:</label>
-        {{ form.time }}
-    </div>
-    <div class="form-group">
-        <label for="temp">Température :</label>
-        {{ form.temp }}
-    </div>
-    <div class="form-group">
-        <label for="capteur">ID du Capteur:</label>
-        {{ form.id_capteur }}
-        </div>
-<input type="submit" value="envoyer les données"\>
+    <form method="post" action="/capteur/traitementdet/">
+        {% csrf_token %}
+        {{ form.as_ul }}
+        <input type="submit" value="envoyer les données"\>
+    </form>
 <br>
 <a href="/capteur/indexdet/"> retournez à la page d'accueil</a>
 {% endblock %}

@@ -4,9 +4,9 @@ from . import models
 from django.http import HttpResponseRedirect
 
 
-def indexmqtt(request):
+def bienvenue(request):
     liste = models.Capteur.objects.all()
-    return render(request, 'capteur/indexmqtt.html', {"liste": liste})
+    return render(request, 'capteur/bienvenue.html', {"liste": liste})
 
 def ajout(request):
     if request.method == "POST":

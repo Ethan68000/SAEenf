@@ -21,6 +21,19 @@ def ajout(request):
         form = DetailsForm()
         return render(request, "Details/ajout.html", {"form": form})
 
+def traitement(request):
+    lform = DetailsForm(request.POST)
+    if lform.is_valid():
+        Details = lform.save()
+        return render(request, "Details/affiche.html", {"Details": Details})
+    else:
+        return render(request, "Details/ajout.html", {"form": lform})
+
 def affiche(request, id):
     Details = models.Details.objects.get(pk=id)
     return render(request, "Donnees/affiche.html", {"Details": Details})
+
+def delete(request, id):
+    suppr = models.Details.objects.get(pk=id)
+    suppr.delete()
+    return HttpResponseRedirect("/capteur/indexdet",)
