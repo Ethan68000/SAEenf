@@ -1,27 +1,19 @@
-
-<form method="POST" action="/capteur/filtre_datedet/">
+<form method="post" action="{% url 'filtre_date' %}">
     {% csrf_token %}
-    <label for="date">Date :</label>
-    <input type="date" name="date" id="date" class="form-control">
+    <label for="date_debut">Date de début:</label>
+    <input type="date" name="date_debut" required>
+    <br>
+    <label for="date_fin">Date de fin:</label>
+    <input type="date" name="date_fin" required>
+    <br>
     <button type="submit">Filtrer</button>
 </form>
-{% if donnees %}
-        <table>
-    <caption>Données pour la date : {{ date }}</caption>
-    <thead>
-        <tr>
-            <th scope="col">ID Capteur</th>
-            <th scope="col">Pièce</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for details in donnees %}
-            <tr>
-                <td>{{ details.capteur.id_capteur }}</td>
-                <td>{{ details.capteur.piece }}</td>
-            </tr>
+<a href="/capteur/indexdet/"> retournez à la page d'accueil</a>
+{% if donnees_filtrees %}
+    <h2>Données filtrées :</h2>
+    <ul>
+        {% for donnee in donnees_filtrees %}
+            <li>{{ donnee }}</li>
         {% endfor %}
-    </tbody>
-        </table>
+    </ul>
 {% endif %}
-{% endblock %}

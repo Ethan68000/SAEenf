@@ -42,31 +42,13 @@ def delete(request, id):
 
 
 def filtre_date(request):
-    details = models.Details.objects.all()
-
     if request.method == 'POST':
-        date = request.POST.get('date')
-
-        if not date:
-            return render(request, 'capteur/filtre_datedet.html', {'erreur'})
-
-        try:
-            details = models.Details.objects.filter(date=date)
-        except models.Details.DoesNotExist:
-            return render(request, 'capteur/filtre_datedet.html', {'erreur': 'Aucune donnée disponible pour la date spécifiée.'})
-
-        context = {
-            'donnees': details,
-            'date': date,
-        }
-
-        return render(request, 'capteur/filtre_datedet.html', context)
-
-    context = {
-        'donnees': details,
-    }
-
-    return render(request, "capteur/filtre_datedet.html", context)
+        date_debut = request.POST.get('date_debut')
+        date_fin = request.POST.get('date_fin')
+        donnees_filtrees = models.Details.objects.filter(date__range=[date_debut, date_fin])
+        return render(request, 'Details/filtre_date.html', {'donnees_filtrees': donnees_filtrees})
+    else:
+        return render(request, 'Details/filtre_date.html')
 
 
 def refresh(request):
