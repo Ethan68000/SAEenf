@@ -24,6 +24,7 @@ urlpatterns = [
                 path('filtre_datedet/', detailsviews.filtre_date),
                 path('refreshdet/',views.refresh, name='refreshdet'),
                 path('choisirdet/', detailsviews.choisir, name='choisirdet'),
-                path('filtre_datedet/',detailsviews.filtre_date, name='filtre_date')
+                path('filtre_datedet/',detailsviews.filtre_date, name='filtre_date'),
+                path('graphiquedet/',detailsviews.graphique)
 
     ]

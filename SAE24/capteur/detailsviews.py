@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from . import models
 from django.http import HttpResponseRedirect, HttpResponse
 from datetime import datetime, date
+from matplotlib import pyplot as plt
 
 
 def index(request):
@@ -49,6 +50,24 @@ def filtre_date(request):
         return render(request, 'Details/filtre_date.html', {'donnees_filtrees': donnees_filtrees})
     else:
         return render(request, 'Details/filtre_date.html')
+
+
+def graphique(request):
+    data = models.Details.objects.all()
+
+    # Conversion des objets datetime.time en chaînes de caractères
+    dates = [entry.time.strftime('%H:%M:%S') for entry in data]
+    temperatures = [entry.temp for entry in data]
+
+    plt.plot(dates, temperatures)
+
+    plt.xlabel('heure')
+    plt.ylabel('Température (°C)')
+    plt.title('Évolution de la température')
+
+    plt.show()
+
+    return HttpResponseRedirect("/capteur/indexdet/")
 
 
 def refresh(request):
